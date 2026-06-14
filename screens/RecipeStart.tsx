@@ -1,0 +1,120 @@
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+
+const starImages: Record<number, any> = {
+  1: require('../assets/images/star1.png'),
+  2: require('../assets/images/star2.png'),
+  3: require('../assets/images/star3.png'),
+  4: require('../assets/images/star4.png'),
+  5: require('../assets/images/star5.png'),
+};
+
+const INGREDIENTS = [
+  { name: '감자', amount: '4개' },
+  { name: '다진마늘', amount: '1작은술' },
+  { name: '국장', amount: '1큰술' },
+  { name: '감자전분', amount: '3큰술' },
+  { name: '소금', amount: '약간' },
+  { name: '애호박', amount: '1/3개' },
+  { name: '양파', amount: '1/4개' },
+  { name: '멸치 다시마 육수', amount: '700ml' },
+];
+
+export default function RecipeStart() {
+  const navigation = useNavigation() as any;
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
+
+        {/* 헤더 */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+            <Image source={require('../assets/images/back.png')} style={styles.backIcon} />
+          </TouchableOpacity>
+        </View>
+
+        {/* 제목 */}
+        <View style={styles.titleSection}>
+          <Text style={styles.title}>강원도 감자옹심이</Text>
+          <Text style={styles.subtitle}>감자로 빚어낸 투박하고 따뜻한 한 그릇</Text>
+        </View>
+
+        {/* 할머니 이미지 */}
+        <View style={styles.imageSection}>
+          <View style={styles.shadowEllipse} />
+          <Image source={require('../assets/images/grandma_cook.png')} style={styles.grandmaImage} />
+        </View>
+
+        {/* 정보 */}
+        <View style={styles.infoSection}>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>소요 시간</Text>
+            <Text style={styles.infoValue}>50분</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>난이도</Text>
+            <Image source={starImages[3]} style={styles.starImage} />
+          </View>
+          <View style={[styles.infoRow, { alignItems: 'flex-start' }]}>
+            <Text style={[styles.infoLabel, { paddingTop: 4 }]}>재료</Text>
+            <View style={styles.ingredientGrid}>
+              {INGREDIENTS.map(ing => (
+                <View key={ing.name} style={styles.ingredientItem}>
+                  <Text style={styles.ingName}>{ing.name}</Text>
+                  <Text style={styles.ingAmount}>{ing.amount}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        </View>
+
+      </ScrollView>
+
+      {/* 하단 버튼 */}
+      <View style={styles.bottomBar}>
+        <TouchableOpacity style={styles.startBtn} onPress={() => navigation.navigate('RecipeFollow')}>
+          <Text style={styles.startBtnText}>시작하기</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#FCFCFC' },
+
+  header: { paddingHorizontal: 20, paddingTop: 32, paddingBottom: 8 },
+  backBtn: { padding: 4, width: 28, height: 28, justifyContent: 'center' },
+  backIcon: { width: 20, height: 20, resizeMode: 'contain' },
+
+  titleSection: { alignItems: 'center', paddingHorizontal: 28, marginTop: 40, gap: 9 },
+  title: { fontSize: 24, fontWeight: '800', color: '#181818', textAlign: 'center' },
+  subtitle: { fontSize: 16, color: '#8D8986', textAlign: 'center' },
+
+  imageSection: { alignItems: 'center', justifyContent: 'center', marginTop: 52, height: 220 },
+  shadowEllipse: {
+    position: 'absolute', bottom: 20, width: 144, height: 23,
+    backgroundColor: '#E8E8E8', borderRadius: 72,
+  },
+  grandmaImage: { width: 260, height: 200, resizeMode: 'contain' },
+
+  infoSection: { paddingLeft: 55, paddingRight: 28, marginTop: 32, gap: 8 },
+  infoRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  infoLabel: { width: 60, fontSize: 12, fontWeight: '700', color: '#181818' },
+  infoValue: { fontSize: 12, color: '#181818' },
+  starImage: { width: 80, height: 16, resizeMode: 'contain', marginLeft: -28 },
+
+  ingredientGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 20, flex: 1 },
+  ingredientItem: { alignItems: 'center', gap: 3 },
+  ingName: { fontSize: 12, color: '#181818', textAlign: 'center' },
+  ingAmount: { fontSize: 11, color: '#42403D', textAlign: 'center' },
+
+  bottomBar: {
+    position: 'absolute', bottom: 0, left: 0, right: 0,
+    paddingHorizontal: 28, paddingBottom: 120, paddingTop: 12, backgroundColor: '#FCFCFC',
+  },
+  startBtn: { backgroundColor: '#FFA23E', borderRadius: 15, paddingVertical: 16, alignItems: 'center' },
+  startBtnText: { fontSize: 22, fontWeight: '700', color: '#FFFFFF' },
+});

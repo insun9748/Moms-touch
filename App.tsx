@@ -1,20 +1,94 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
+import { Image } from 'react-native';
+import Home from './screens/Home';
+import RecipeCreate from './screens/RecipeCreate';
+import Map from './screens/Map';
+import MyPage from './screens/MyPage';
+import RecipeDetail from './screens/RecipeDetail';
+import RecipeStart from './screens/RecipeStart';
+import RecipeFollow from './screens/RecipeFollow';
+import RecipeComplete from './screens/RecipeComplete';
+import RecipeVoice from './screens/RecipeVoice';
+import RecipeRecording from './screens/RecipeRecording';
+import RecipeChat from './screens/RecipeChat';
+import RegionSelect from './screens/RegionSelect';
+import RecipeProcessing from './screens/RecipeProcessing';
+import RecipeReview from './screens/RecipeReview';
+import RecipeUploadDone from './screens/RecipeUploadDone';
 
-export default function App() {
+SplashScreen.preventAutoHideAsync();
+
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+const icons: Record<string, { empty: any; full: any }> = {
+  Home:   { empty: require('./assets/images/Home_empty.png'),   full: require('./assets/images/Home_full.png') },
+  Map:    { empty: require('./assets/images/map_empty.png'),    full: require('./assets/images/map_full.png') },
+  Recipe: { empty: require('./assets/images/Recipe_empty.png'), full: require('./assets/images/Recipe_full.png') },
+  Mypage: { empty: require('./assets/images/Mypage_empty.png'), full: require('./assets/images/Mypage_full.png') },
+};
+
+function TabNavigator() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarShowLabel: true,
+        tabBarLabelStyle: { fontSize: 9, marginBottom: 8 },
+        tabBarItemStyle: { paddingTop: 10, gap: 4 },
+        tabBarActiveTintColor: '#FF9019',
+        tabBarInactiveTintColor: '#9B9794',
+        tabBarStyle: { height: 80, borderTopWidth: 1, borderTopColor: '#E6E6E6' },
+        tabBarIcon: ({ focused }) => (
+          <Image
+            source={focused ? icons[route.name].full : icons[route.name].empty}
+            style={{ width: 28, height: 28, resizeMode: 'contain' }}
+          />
+        ),
+      })}
+    >
+      <Tab.Screen name="Home"   component={Home}         options={{ tabBarLabel: '홈' }} />
+      <Tab.Screen name="Map"    component={Map}          options={{ tabBarLabel: '손맛 보관함' }} />
+      <Tab.Screen name="Recipe" component={RecipeCreate} options={{ tabBarLabel: '레시피 만들기' }} />
+      <Tab.Screen name="Mypage" component={MyPage}       options={{ tabBarLabel: '마이페이지' }} />
+    </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  const [loaded] = useFonts({
+    'NanumHuman-Regular': require('./assets/fonts/NanumHumanRegular.ttf'),
+    'NanumHuman-Bold': require('./assets/fonts/NanumHumanBold.ttf'),
+    'NanumHuman-EB': require('./assets/fonts/NanumHumanEB.ttf'),
+  });
+
+  useEffect(() => {
+    if (loaded) { SplashScreen.hideAsync(); }
+  }, [loaded]);
+
+  if (!loaded) { return null; }
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Main" component={TabNavigator} />
+        <Stack.Screen name="RecipeDetail" component={RecipeDetail} />
+        <Stack.Screen name="RecipeStart" component={RecipeStart} />
+        <Stack.Screen name="RecipeFollow" component={RecipeFollow} />
+        <Stack.Screen name="RecipeComplete" component={RecipeComplete} />
+        <Stack.Screen name="RecipeVoice" component={RecipeVoice} />
+        <Stack.Screen name="RecipeRecording" component={RecipeRecording} />
+        <Stack.Screen name="RecipeChat" component={RecipeChat} />
+        <Stack.Screen name="RegionSelect" component={RegionSelect} />
+        <Stack.Screen name="RecipeProcessing" component={RecipeProcessing} />
+        <Stack.Screen name="RecipeReview" component={RecipeReview} />
+        <Stack.Screen name="RecipeUploadDone" component={RecipeUploadDone} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
