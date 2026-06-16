@@ -20,6 +20,7 @@ import RegionSelect from './screens/RegionSelect';
 import RecipeProcessing from './screens/RecipeProcessing';
 import RecipeReview from './screens/RecipeReview';
 import RecipeUploadDone from './screens/RecipeUploadDone';
+import OnboardingPreferences from './screens/OnboardingPreferences';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -75,7 +76,8 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="OnboardingPreferences" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="OnboardingPreferences" component={OnboardingPreferences} />
         <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="RecipeDetail" component={RecipeDetail} />
         <Stack.Screen name="RecipeStart" component={RecipeStart} />
