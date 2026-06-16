@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Image,
+  ImageBackground,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -92,6 +93,13 @@ export default function RecipeChat() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {page === 'intro' && (
+        <ImageBackground
+          source={require('../assets/images/background2.png')}
+          style={styles.topBackground}
+          resizeMode="cover"
+        />
+      )}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn} activeOpacity={0.7}>
           <Image source={require('../assets/images/back.png')} style={styles.backIcon} />
@@ -145,7 +153,7 @@ export default function RecipeChat() {
               </TouchableOpacity>
             </View>
 
-            <Image source={require('../assets/images/grandma_cook.png')} style={styles.grandmaImage} />
+            <Image source={require('../assets/images/grandma_memo.png')} style={styles.grandmaImage} />
           </View>
               </View>
             ) : (
@@ -213,6 +221,7 @@ function TabItem({ icon, label, active }: { icon: any; label: string; active?: b
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#FCFCFC' },
+  topBackground: { position: 'absolute', top: 0, left: 0, right: 0, height: 362 },
   keyboardArea: { flex: 1 },
   dismissArea: { flex: 1 },
   header: {
@@ -287,10 +296,10 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   grandmaImage: {
-    width: 210,
-    height: 210,
+    width: 310,
+    height: 310,
     resizeMode: 'contain',
-    marginTop: 4,
+    marginTop: -40,
   },
   chatBody: { flex: 1 },
   messageList: { flex: 1 },
