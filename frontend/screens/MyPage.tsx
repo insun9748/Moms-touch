@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { useNavigation } from '@react-navigation/native';
 
 type TabType = 'made' | 'followed';
 
@@ -43,6 +44,7 @@ const RECIPES = [
 ];
 
 export default function MyPage() {
+  const navigation = useNavigation() as any;
   const [activeTab, setActiveTab] = useState<TabType>('made');
   const [selectedRegion, setSelectedRegion] = useState('전라도');
   const [regionOpen, setRegionOpen] = useState(false);
@@ -150,10 +152,14 @@ export default function MyPage() {
             <View key={`${activeTab}-${recipe.id}`} style={styles.recipeCard}>
               <Text style={styles.recipeTitle}>{recipe.title}</Text>
               <Text style={styles.recipeDesc}>{recipe.desc}</Text>
-              <View style={styles.authorRow}>
+              <TouchableOpacity
+                style={styles.authorRow}
+                onPress={() => navigation.navigate('UserProfile', { name: recipe.author, region: selectedRegion })}
+                activeOpacity={0.7}
+              >
                 <View style={styles.avatarPlaceholder} />
                 <Text style={styles.authorText}>{recipe.author}</Text>
-              </View>
+              </TouchableOpacity>
             </View>
           ))}
         </View>

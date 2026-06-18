@@ -63,8 +63,14 @@ export default function Home() {
               <Text style={styles.recipeTitle}>{item.title}</Text>
               <Text style={styles.recipeDesc}>{item.desc}</Text>
               <View style={styles.recipeFooter}>
-                <View style={styles.avatar} />
-                <Text style={styles.recipeAuthor}>{item.author}</Text>
+                <TouchableOpacity
+                  style={styles.authorTap}
+                  onPress={() => navigation.navigate('UserProfile', { name: item.author })}
+                  activeOpacity={0.7}
+                >
+                  <View style={styles.avatar} />
+                  <Text style={styles.recipeAuthor}>{item.author}</Text>
+                </TouchableOpacity>
                 {item.done && (
                   <View style={styles.doneBadge}>
                     <Text style={styles.doneText}>완료</Text>
@@ -122,6 +128,7 @@ const styles = StyleSheet.create({
   recipeTitle: { fontSize: 17, fontWeight: '800', color: '#181818', marginBottom: 4 },
   recipeDesc: { fontSize: 14, color: '#827E7B', lineHeight: 21, marginBottom: 12 },
   recipeFooter: { flexDirection: 'row', alignItems: 'center', gap: 9 },
+  authorTap: { flexDirection: 'row', alignItems: 'center', gap: 9 },
   avatar: { width: 24, height: 24, borderRadius: 12, backgroundColor: '#F3F3F3' },
   recipeAuthor: { fontSize: 14, color: '#181818' },
   doneBadge: {

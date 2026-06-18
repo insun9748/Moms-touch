@@ -21,6 +21,7 @@ import RecipeProcessing from './screens/RecipeProcessing';
 import RecipeReview from './screens/RecipeReview';
 import RecipeUploadDone from './screens/RecipeUploadDone';
 import OnboardingPreferences from './screens/OnboardingPreferences';
+import UserProfile from './screens/UserProfile';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -90,6 +91,7 @@ export default function App() {
         <Stack.Screen name="RecipeProcessing" component={RecipeProcessing} />
         <Stack.Screen name="RecipeReview" component={RecipeReview} />
         <Stack.Screen name="RecipeUploadDone" component={RecipeUploadDone} />
+        <Stack.Screen name="UserProfile" component={UserProfile} />
       </Stack.Navigator>
     </NavigationContainer>
   );

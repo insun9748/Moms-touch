@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { useNavigation } from '@react-navigation/native';
 
 type ViewMode = 'map' | 'recipes';
 
@@ -51,6 +52,7 @@ const RECIPES = [
 ];
 
 export default function Map() {
+  const navigation = useNavigation() as any;
   const [viewMode, setViewMode] = useState<ViewMode>('map');
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [regionPickerOpen, setRegionPickerOpen] = useState(false);
@@ -294,8 +296,14 @@ export default function Map() {
               <Text style={styles.recipeTitle}>{recipe.title}</Text>
               <Text style={styles.recipeDesc}>{recipe.desc}</Text>
               <View style={styles.recipeFooter}>
-                <View style={styles.avatarPlaceholder} />
-                <Text style={styles.authorText}>{recipe.author}</Text>
+                <TouchableOpacity
+                  style={styles.authorTap}
+                  onPress={() => navigation.navigate('UserProfile', { name: recipe.author, region: selectedRegionLabel })}
+                  activeOpacity={0.7}
+                >
+                  <View style={styles.avatarPlaceholder} />
+                  <Text style={styles.authorText}>{recipe.author}</Text>
+                </TouchableOpacity>
                 {recipe.done && (
                   <View style={styles.doneBadge}>
                     <Text style={styles.doneText}>따라하기 완료</Text>
@@ -641,6 +649,11 @@ recipeTitle: {
     alignItems: 'center',
     gap: 10,
     marginTop: 14,
+  },
+  authorTap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
   avatarPlaceholder: {
     width: 23,
