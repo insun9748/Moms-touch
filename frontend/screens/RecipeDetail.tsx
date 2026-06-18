@@ -96,11 +96,11 @@ export default function RecipeDetail() {
         <View style={styles.stepsSection}>
           <Text style={styles.sectionTitle}>레시피</Text>
           <View>
-            {/* 점선 */}
-            <View style={styles.dashedLine} />
-            {STEPS.map(step => (
+            {STEPS.map((step, i) => (
               <View key={step.id} style={styles.stepRow}>
                 <View style={styles.stepLeft}>
+                  {/* 마지막 단계 아래로는 연결선을 그리지 않음 */}
+                  {i < STEPS.length - 1 && <View style={styles.dashedLine} />}
                   <View style={styles.stepBadge}>
                     <Text style={styles.stepBadgeText}>{step.id}</Text>
                   </View>
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   // 레시피 단계
   stepsSection: { paddingHorizontal: 28, paddingTop: 20 },
   sectionTitle: { fontSize: 16, fontWeight: '700', color: '#181818', marginBottom: 20 },
-  dashedLine: { position: 'absolute', left: 9, top: 0, bottom: 0, width: 2, borderStyle: 'dashed', borderLeftWidth: 2, borderColor: '#FFD8AF' },
+  dashedLine: { position: 'absolute', left: 9, top: 20, bottom: -12, width: 2, borderStyle: 'dashed', borderLeftWidth: 2, borderColor: '#FFD8AF' },
 
   stepRow: { flexDirection: 'row', gap: 12, marginBottom: 12 },
   stepLeft: { width: 20, alignItems: 'center', zIndex: 1 },
