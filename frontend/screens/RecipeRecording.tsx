@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image, Alert, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useAudioRecorder, AudioModule, RecordingPresets, setAudioModeAsync } from 'expo-audio';
 import { useState } from 'react';
 import { Animated, Easing } from 'react-native';
@@ -10,6 +10,8 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:8000";
 
 export default function RecipeRecording() {
   const navigation = useNavigation() as any;
+  const route = useRoute() as any;
+  const autoStart = route.params?.autoStart ?? false;
   const audioRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   const [isRecording, setIsRecording] = useState(false);
 
@@ -73,6 +75,13 @@ export default function RecipeRecording() {
       wave3.stop();
     };
   }, []);
+
+  // 이전 화면에서 권한을 받고 넘어온 경우, 진입 즉시 녹음 시작
+  useEffect(() => {
+    if (autoStart) {
+      startRecording();
+    }
+  }, [autoStart]);
 
   const startRecording = async () => {
     const permission = await AudioModule.requestRecordingPermissionsAsync();
