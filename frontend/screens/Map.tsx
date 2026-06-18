@@ -301,7 +301,6 @@ export default function Map() {
             <Text style={styles.sortText}>최신순</Text>
           </View>
 
-<<<<<<< HEAD
           {loading ? (
             <ActivityIndicator color="#FF9019" style={{ marginTop: 32 }} />
           ) : !selectedRegion ? (
@@ -319,8 +318,19 @@ export default function Map() {
                 <Text style={styles.recipeTitle}>{recipe.title}</Text>
                 <Text style={styles.recipeDesc} numberOfLines={2}>{recipe.description}</Text>
                 <View style={styles.recipeFooter}>
-                  <View style={styles.avatarPlaceholder} />
-                  <Text style={styles.authorText}>{recipe.author ?? recipe.region}</Text>
+                  <TouchableOpacity
+                    style={styles.authorTap}
+                    onPress={() =>
+                      navigation.navigate('UserProfile', {
+                        name: recipe.author ?? recipe.region,
+                        region: selectedRegionLabel,
+                      })
+                    }
+                    activeOpacity={0.7}
+                  >
+                    <View style={styles.avatarPlaceholder} />
+                    <Text style={styles.authorText}>{recipe.author ?? recipe.region}</Text>
+                  </TouchableOpacity>
                   {followedIds.has(recipe.id) && (
                     <View style={styles.doneBadge}>
                       <Text style={styles.doneText}>따라하기 완료</Text>
@@ -330,29 +340,6 @@ export default function Map() {
               </TouchableOpacity>
             ))
           )}
-=======
-          {RECIPES.map(recipe => (
-            <View key={`${selectedRegion}-${recipe.id}`} style={styles.recipeCard}>
-              <Text style={styles.recipeTitle}>{recipe.title}</Text>
-              <Text style={styles.recipeDesc}>{recipe.desc}</Text>
-              <View style={styles.recipeFooter}>
-                <TouchableOpacity
-                  style={styles.authorTap}
-                  onPress={() => navigation.navigate('UserProfile', { name: recipe.author, region: selectedRegionLabel })}
-                  activeOpacity={0.7}
-                >
-                  <View style={styles.avatarPlaceholder} />
-                  <Text style={styles.authorText}>{recipe.author}</Text>
-                </TouchableOpacity>
-                {recipe.done && (
-                  <View style={styles.doneBadge}>
-                    <Text style={styles.doneText}>따라하기 완료</Text>
-                  </View>
-                )}
-              </View>
-            </View>
-          ))}
->>>>>>> 8cd3835b5b3207d010eaae265f7436edb2a6b5a2
         </ScrollView>
       )}
     </SafeAreaView>
@@ -541,34 +528,10 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     color: '#827E7B',
   },
-<<<<<<< HEAD
   recipeFooter: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 14 },
+  authorTap: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   avatarPlaceholder: { width: 23, height: 23, borderRadius: 12, backgroundColor: '#F1F1F1' },
   authorText: { fontFamily: 'NanumHuman-Bold', fontSize: 13, color: '#181818' },
-=======
-  recipeFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    marginTop: 14,
-  },
-  authorTap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  avatarPlaceholder: {
-    width: 23,
-    height: 23,
-    borderRadius: 12,
-    backgroundColor: '#F1F1F1',
-  },
-  authorText: {
-    fontFamily: 'NanumHuman-Bold',
-    fontSize: 13,
-    color: '#181818',
-  },
->>>>>>> 8cd3835b5b3207d010eaae265f7436edb2a6b5a2
   doneBadge: {
     marginLeft: 'auto',
     height: 24,

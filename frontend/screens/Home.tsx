@@ -110,7 +110,7 @@ export default function Home() {
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
-          )}
+          ))}
         </View>
 
       </ScrollView>
