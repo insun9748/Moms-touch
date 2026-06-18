@@ -105,7 +105,7 @@ export default function Home() {
                   onPress={() => navigation.navigate('UserProfile', { name: item.author })}
                   activeOpacity={0.7}
                 >
-                  <View style={styles.avatar} />
+                  <Image source={require('../assets/images/profile.png')} style={styles.avatar} />
                   <Text style={styles.recipeAuthor}>{item.author ?? item.region}</Text>
                 </TouchableOpacity>
               </View>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   recipeDesc: { fontSize: 14, color: '#827E7B', lineHeight: 21, marginBottom: 12 },
   recipeFooter: { flexDirection: 'row', alignItems: 'center', gap: 9 },
   authorTap: { flexDirection: 'row', alignItems: 'center', gap: 9 },
-  avatar: { width: 24, height: 24, borderRadius: 12, backgroundColor: '#F3F3F3' },
+  avatar: { width: 24, height: 24, borderRadius: 12, backgroundColor: '#FFEAB4' },
   recipeAuthor: { fontSize: 14, color: '#181818' },
   emptyText: { fontSize: 14, color: '#9B9794', textAlign: 'center', paddingVertical: 24 },
 });

@@ -328,7 +328,7 @@ export default function Map() {
                     }
                     activeOpacity={0.7}
                   >
-                    <View style={styles.avatarPlaceholder} />
+                    <Image source={require('../assets/images/profile.png')} style={styles.avatarPlaceholder} />
                     <Text style={styles.authorText}>{recipe.author ?? recipe.region}</Text>
                   </TouchableOpacity>
                   {followedIds.has(recipe.id) && (
@@ -530,7 +530,7 @@ const styles = StyleSheet.create({
   },
   recipeFooter: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 14 },
   authorTap: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  avatarPlaceholder: { width: 23, height: 23, borderRadius: 12, backgroundColor: '#F1F1F1' },
+  avatarPlaceholder: { width: 23, height: 23, borderRadius: 12, backgroundColor: '#FFEAB4' },
   authorText: { fontFamily: 'NanumHuman-Bold', fontSize: 13, color: '#181818' },
   doneBadge: {
     marginLeft: 'auto',

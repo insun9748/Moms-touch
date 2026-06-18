@@ -60,7 +60,7 @@ export default function RegionSelect() {
               activeOpacity={0.75}
             >
               <Text style={[styles.badgeText, selected === r.fullName && styles.badgeTextSelected]}>
-                {r.name}
+                {r.fullName}
               </Text>
             </TouchableOpacity>
           ))}
