@@ -26,6 +26,13 @@ import ProfileSetup from './screens/ProfileSetup';
 
 SplashScreen.preventAutoHideAsync();
 
+// ngrok 브라우저 경고 페이지 우회
+const _originalFetch = global.fetch;
+(global as any).fetch = (url: RequestInfo | URL, options?: RequestInit) => {
+  const headers = { 'ngrok-skip-browser-warning': '1', ...(options?.headers ?? {}) };
+  return _originalFetch(url as any, { ...options, headers });
+};
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 

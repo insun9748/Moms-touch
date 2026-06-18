@@ -24,9 +24,13 @@ export default function RecipeDetail() {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const res = await fetch(`${API_URL}/get-recipe/${recipe_id}`);
+        const res = await fetch(`${API_URL}/recipes/${recipe_id}`, { headers: { 'ngrok-skip-browser-warning': '1' } });
         if (!res.ok) throw new Error('fetch 실패');
         const data = await res.json();
+        // ingredients가 dict이면 배열로 변환 (화면 표시용)
+        if (data.ingredients && !Array.isArray(data.ingredients)) {
+          data.ingredients = Object.entries(data.ingredients).map(([name, amount]) => ({ name, amount }));
+        }
         setRecipe(data);
       } catch (e) {
         console.error('레시피 불러오기 실패:', e);

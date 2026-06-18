@@ -27,11 +27,11 @@ export default function Home() {
         const user = userStr ? JSON.parse(userStr) : null;
         if (user) {
           setUserName(user.user_id);
-          const recRes = await fetch(`${API_URL}/recipes/recommended?user_id=${user.id}`);
+          const recRes = await fetch(`${API_URL}/recipes/recommended?user_id=${user.id}`, { headers: { 'ngrok-skip-browser-warning': '1' } });
           const recData = await recRes.json();
           setRecommended(recData.recipes ?? []);
         }
-        const res = await fetch(`${API_URL}/recipes`);
+        const res = await fetch(`${API_URL}/recipes`, { headers: { 'ngrok-skip-browser-warning': '1' } });
         const data = await res.json();
         setRecipes(data.recipes ?? []);
       } catch (err) {
@@ -110,7 +110,7 @@ export default function Home() {
                 <Text style={styles.recipeDesc} numberOfLines={2}>{item.description}</Text>
                 <View style={styles.recipeFooter}>
                   <View style={styles.avatar} />
-                  <Text style={styles.recipeAuthor}>{item.region}</Text>
+                  <Text style={styles.recipeAuthor}>{item.author ?? item.region}</Text>
                 </View>
               </TouchableOpacity>
             ))

@@ -21,7 +21,7 @@ export default function RecipeComplete() {
         if (user?.id) {
           await fetch(`${API_URL}/recipe-follows`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
             body: JSON.stringify({ user_id: user.id, recipe_id: recipe.id }),
           });
         }

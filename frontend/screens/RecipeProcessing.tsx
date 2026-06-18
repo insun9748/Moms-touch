@@ -88,7 +88,7 @@ export default function RecipeProcessing() {
       try {
         const res = await fetch(`${API_URL}/generate-recipe`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
           body: JSON.stringify({ transcript, region }),
         });
         const data = await res.json();

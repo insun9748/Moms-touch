@@ -26,7 +26,7 @@ export default function ProfileSetup() {
       // 먼저 가입 시도
       const signupRes = await fetch(`${API_URL}/auth/signup`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
         body: JSON.stringify({ user_id: trimmed }),
       });
       const signupData = await signupRes.json();
@@ -41,7 +41,7 @@ export default function ProfileSetup() {
       if (signupData.message === '이미 사용 중인 닉네임이에요') {
         const loginRes = await fetch(`${API_URL}/auth/login`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
           body: JSON.stringify({ user_id: trimmed }),
         });
         const loginData = await loginRes.json();

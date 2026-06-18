@@ -25,9 +25,10 @@ export default function MyPage() {
         const user = userStr ? JSON.parse(userStr) : null;
         if (!user) return;
         setUserName(user.user_id);
+        const ngrokHeader = { 'ngrok-skip-browser-warning': '1' };
         const [madeRes, followedRes] = await Promise.all([
-          fetch(`${API_URL}/users/${user.id}/recipes/made`),
-          fetch(`${API_URL}/users/${user.id}/recipes/followed`),
+          fetch(`${API_URL}/users/${user.id}/recipes/made`, { headers: ngrokHeader }),
+          fetch(`${API_URL}/users/${user.id}/recipes/followed`, { headers: ngrokHeader }),
         ]);
         const madeData = await madeRes.json();
         const followedData = await followedRes.json();

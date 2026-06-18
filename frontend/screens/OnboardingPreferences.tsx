@@ -29,7 +29,7 @@ const REGIONS = [
   { name: '충청남도',   left: 95,  top: 185 },
   { name: '전라북도',   left: 105, top: 242 },
   { name: '경상남도',   left: 191, top: 267 },
-  { name: '전라남도',   left: 100, top: 295 },
+  { name: '전라도',     left: 100, top: 295 },
   { name: '제주도',     left: 100,  top: 375 },
   { name: '울릉도',     left: 314, top: 150 },
   { name: '독도',       left: 320, top: 238 },
@@ -91,7 +91,7 @@ export default function OnboardingPreferences() {
         if (user && region && food && level) {
           await fetch(`${API_URL}/preferences`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
             body: JSON.stringify({
               user_id: user.id,
               preferred_region: region,

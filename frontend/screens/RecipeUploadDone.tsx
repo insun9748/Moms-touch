@@ -20,7 +20,7 @@ export default function RecipeUploadDone() {
         const user = userStr ? JSON.parse(userStr) : null;
         await fetch(`${API_URL}/save-recipe`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
           body: JSON.stringify({ ...recipe, user_id: user?.id ?? 1 }),
         });
       } catch (e) {

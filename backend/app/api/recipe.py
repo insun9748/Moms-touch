@@ -198,13 +198,17 @@ async def get_recipes(region: Optional[str] = Query(None)):
     try:
         if region:
             cur.execute("""
-                SELECT id, title, description, region, duration, difficulty, ingredients, created_at
-                FROM recipes WHERE region = %s ORDER BY created_at DESC
+                SELECT r.id, r.title, r.description, r.region, r.duration, r.difficulty, r.ingredients, r.created_at,
+                       u.user_id AS author
+                FROM recipes r LEFT JOIN users u ON r.user_id = u.id
+                WHERE r.region = %s ORDER BY r.created_at DESC
             """, (region,))
         else:
             cur.execute("""
-                SELECT id, title, description, region, duration, difficulty, ingredients, created_at
-                FROM recipes ORDER BY created_at DESC
+                SELECT r.id, r.title, r.description, r.region, r.duration, r.difficulty, r.ingredients, r.created_at,
+                       u.user_id AS author
+                FROM recipes r LEFT JOIN users u ON r.user_id = u.id
+                ORDER BY r.created_at DESC
             """)
         return {"recipes": [serialize_row(r) for r in cur.fetchall()]}
     finally:
@@ -219,7 +223,11 @@ async def get_recommended_recipes(user_id: int):
     try:
         cur.execute("SELECT preferred_region, preferred_difficulty FROM user_preferences WHERE user_id = %s", (user_id,))
         pref = cur.fetchone()
-        cur.execute("SELECT id, title, description, region, duration, difficulty, created_at FROM recipes")
+        cur.execute("""
+            SELECT r.id, r.title, r.description, r.region, r.duration, r.difficulty, r.created_at,
+                   u.user_id AS author
+            FROM recipes r LEFT JOIN users u ON r.user_id = u.id
+        """)
         recipes = cur.fetchall()
         if not pref:
             return {"recipes": [serialize_row(r) for r in recipes[:10]]}

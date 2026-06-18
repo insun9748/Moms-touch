@@ -15,13 +15,13 @@ export default function RecipeStart() {
   const route = useRoute() as any;
   const recipe = route.params?.recipe;
 
-  const ingredients: { name: string; amount: string }[] = recipe
-    ? Object.entries(
-        typeof recipe.ingredients === 'string'
-          ? JSON.parse(recipe.ingredients)
-          : (recipe.ingredients ?? {})
-      ).map(([name, amount]) => ({ name, amount: amount as string }))
-    : [];
+  const ingredients: { name: string; amount: string }[] = (() => {
+    if (!recipe) return [];
+    const raw = recipe.ingredients;
+    if (Array.isArray(raw)) return raw;
+    const obj = typeof raw === 'string' ? JSON.parse(raw) : (raw ?? {});
+    return Object.entries(obj).map(([name, amount]) => ({ name, amount: amount as string }));
+  })();
 
   return (
     <SafeAreaView style={styles.container}>
